@@ -135,7 +135,7 @@ func TestTransferTxDeadLock(t *testing.T) {
 		}
 		// txName := fmt.Sprintf("tx %d", i+1)
 		go func() {
-			// ctx := context.WithValue(context.Background(), txKey, txName)
+			//ctx := context.WithValue(context.Background(), txKey, txName)
 			_, err := store.TransferTx(context.Background(), TransferTxParams{
 				FromAccountID: fromAccountId,
 				ToAccountID:   toAccountId,
