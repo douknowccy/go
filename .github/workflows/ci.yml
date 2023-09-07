@@ -47,5 +47,4 @@ jobs:
         run: make migrateup
 
       - name: Run unit Tests
-        run: |
-          go test -v -cover ./...
+        run: make test

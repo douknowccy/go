@@ -55,52 +55,51 @@ var txKey = struct{}{}
 
 //TransferTx 運行把money 去其他account
 //創建 transfer record, add account entry, update accounts balance
-func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
-
-	var result TransferTxResult
-
-	err := store.execTx(ctx, func(q *Queries) error {
-		var err error
-
-		txName := ctx.Value(txKey)
-		fmt.Println(txName, "create transfer")
-		result.Transfer, err = q.CreateTransfer(ctx,
-			CreateTransferParams{
-				FromAccountID: arg.FromAccountID,
-				ToAccountID:   arg.ToAccountID,
-				Amount:        arg.Amount,
-			})
-		if err != nil {
-			return err
-		}
-
-		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: arg.FromAccountID,
-			Amount:    -arg.Amount,
-		})
-		if err != nil {
-			return err
-		}
-
-		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: arg.ToAccountID,
-			Amount:    arg.Amount,
-		})
-		if err != nil {
-			return err
-		}
-		//get account=> update its balance
-		//id 照順序 避免deadlock
-		if arg.FromAccountID < arg.ToAccountID {
-			result.FromAccount, result.ToAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
-		} else {
-			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
-		}
-
-		return nil
-	})
-	return result, err
-}
+//func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
+//
+//	var result TransferTxResult
+//
+//	err := store.execTx(ctx, func(q *Queries) error {
+//		var err error
+//
+//		txName := ctx.Value(txKey)
+//		result.Transfer, err = q.CreateTransfer(ctx,
+//			CreateTransferParams{
+//				FromAccountID: arg.FromAccountID,
+//				ToAccountID:   arg.ToAccountID,
+//				Amount:        arg.Amount,
+//			})
+//		if err != nil {
+//			return err
+//		}
+//
+//		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
+//			AccountID: arg.FromAccountID,
+//			Amount:    -arg.Amount,
+//		})
+//		if err != nil {
+//			return err
+//		}
+//
+//		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
+//			AccountID: arg.ToAccountID,
+//			Amount:    arg.Amount,
+//		})
+//		if err != nil {
+//			return err
+//		}
+//		//get account=> update its balance
+//		//id 照順序 避免deadlock
+//		if arg.FromAccountID < arg.ToAccountID {
+//			result.FromAccount, result.ToAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
+//		} else {
+//			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
+//		}
+//
+//		return nil
+//	})
+//	return result, err
+//}
 
 func addMoney(ctx context.Context,
 	q *Queries,
