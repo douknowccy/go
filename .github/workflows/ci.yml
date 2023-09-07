@@ -48,6 +48,6 @@ jobs:
           sudo mv migrate /usr/bin/migrate
           which migrate
       - name: Run migration
-        run: make migrateup
+        run: migrate --path db/migration --database "postgres://root:password@localhost:5432/simple_bank?sslmode=disable" --verbose up
       - name: Test
         run: make test
