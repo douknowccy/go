@@ -51,7 +51,7 @@ type TransferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
-var txKey = struct{}{}
+//var txKey = struct{}{}
 
 //TransferTx 運行把money 去其他account
 //創建 transfer record, add account entry, update accounts balance
@@ -101,24 +101,24 @@ var txKey = struct{}{}
 //	return result, err
 //}
 
-func addMoney(ctx context.Context,
-	q *Queries,
-	accountID1 int64,
-	amoun1 int64,
-	accountID2 int64,
-	amount2 int64) (account1 Account, account2 Account, err error) {
-	account1, err = q.AddAcountBalance(ctx, AddAcountBalanceParams{
-		ID:     accountID1,
-		Amount: amoun1,
-	})
-	if err != nil {
-		//go 中 一樣return account1, account2, nil
-		return
-
-	}
-	account2, err = q.AddAcountBalance(ctx, AddAcountBalanceParams{
-		ID:     accountID2,
-		Amount: amount2,
-	})
-	return
-}
+//func addMoney(ctx context.Context,
+//	q *Queries,
+//	accountID1 int64,
+//	amoun1 int64,
+//	accountID2 int64,
+//	amount2 int64) (account1 Account, account2 Account, err error) {
+//	account1, err = q.AddAcountBalance(ctx, AddAcountBalanceParams{
+//		ID:     accountID1,
+//		Amount: amoun1,
+//	})
+//	if err != nil {
+//		//go 中 一樣return account1, account2, nil
+//		return
+//
+//	}
+//	account2, err = q.AddAcountBalance(ctx, AddAcountBalanceParams{
+//		ID:     accountID2,
+//		Amount: amount2,
+//	})
+//	return
+//}
