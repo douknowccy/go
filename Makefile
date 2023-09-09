@@ -13,6 +13,12 @@ migrateup:
 migratedown:
 	migrate --path db/migration --database "postgres://root:password@localhost:5432/simple_bank?sslmode=disable" --verbose down
 
+migrateup1:
+	migrate --path db/migration --database "postgres://root:password@localhost:5432/simple_bank?sslmode=disable" --verbose up 1
+
+migratedown1:
+	migrate --path db/migration --database "postgres://root:password@localhost:5432/simple_bank?sslmode=disable" --verbose down 1
+
 sqlc:
 	docker run --rm -v C:\Users\Falco\Desktop\go:/src -w /src kjconroy/sqlc generate
 
@@ -23,4 +29,4 @@ server:
 mock:
 	mockgen --package mockdb -destination db/mock/store.go com.falco.go/db/sqlc Store
 
-.PHONY: postgres createdb dropdb migrateup migratedown test server mock
+.PHONY: postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 test server mock

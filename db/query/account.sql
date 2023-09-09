@@ -24,13 +24,13 @@ ORDER BY id
 LIMIT $1
 OFFSET $2;
 
--- name: UpdateAcoount :one
+-- name: UpdateAccount :one
 UPDATE accounts
 SET balance = $2
 WHERE id = $1
 RETURNING *;
 
--- name: AddAcountBalance :one
+-- name: AddAccountBalance :one
 UPDATE accounts
 SET balance = balance + sqlc.arg(amount)
 WHERE id = sqlc.arg(id)
