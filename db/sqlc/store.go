@@ -109,12 +109,12 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 func addMoney(ctx context.Context,
 	q *Queries,
 	accountID1 int64,
-	amoun1 int64,
+	amount1 int64,
 	accountID2 int64,
 	amount2 int64) (account1 Account, account2 Account, err error) {
 	account1, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
 		ID:     accountID1,
-		Amount: amoun1,
+		Amount: amount1,
 	})
 	if err != nil {
 		//go 中 一樣return account1, account2, nil
